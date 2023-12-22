@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="ngAppStrict" ng-strict-di="true">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,400i,700|Open+Sans+Condensed:300,400,500,600,700|Crete+Round:400i" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="../css/bootstrap.css" type="text/css">
+        <link rel="stylesheet" href="../style.css" type="text/css">
+        <link rel="stylesheet" href="../css/font-icons.css" type="text/css">
+        <link rel="stylesheet" href="../css/animate.css" type="text/css">
+        <link rel="stylesheet" href="../css/magnific-popup.css" type="text/css">
+        <link rel="stylesheet" href="../css/fonts.css" type="text/css">
+        <link rel="stylesheet" href="../css/responsive.css" type="text/css">
+        <link rel="stylesheet" href="../css/colors.css" type="text/css">
+        <link rel="stylesheet" href="css/screen.css">
+        <link rel="shortcut icon" href="/favicon.ico">
+        <title>3D Spectrogram</title>
+    </head>
+    <body class="stretched">
+        <header id="header" class="static-sticky">
+            <div id="header-wrap" class="header-spectrogram">
+                <div class="container clearfix">
+                    <div class="header-row">
+
+					   <!-- Logo
+					   ============================================= -->
+                        <div id="logo">
+                            <a href="https://www.arrangingforcarillon.com" class="standard-logo" data-dark-logo="/images/logo-dark.png"><img src="/images/logo.png" alt="Logo"></a>
+                            <a href="https://www.arrangingforcarillon.com" class="retina-logo" data-dark-logo="/images/logo-dark@2x.png"><img src="/images/logo@2x.png" alt="Logo"></a>
+                        </div><!-- #logo end -->
+                        
+                        <div id="primary-menu-trigger">
+                            <svg class="svg-trigger" viewBox="0 0 100 100"><path d="m 30,33 h 40 c 3.722839,0 7.5,3.126468 7.5,8.578427 0,5.451959 -2.727029,8.421573 -7.5,8.421573 h -20"></path><path d="m 30,50 h 40"></path><path d="m 70,67 h -40 c 0,0 -7.5,-0.802118 -7.5,-8.365747 0,-7.563629 7.5,-8.634253 7.5,-8.634253 h 20"></path></svg>
+                        </div>
+
+					   <!-- Primary Navigation
+					   ============================================= -->
+					   <nav class="primary-menu">
+                           
+                           <ul class="menu-container">
+                               <li class="menu-item current">
+                                   <a class="menu-link" href="/spectrogram/"><div>Spectrogram</div></a>
+                               </li>
+                               <li class="menu-item">
+                                   <a class="menu-link" href="/lessons/"><div>Lessons</div></a>
+                               </li>
+                               <li class="menu-item">
+                                   <a class="menu-link" href="/resources/"><div>Resources</div></a>
+                               </li>
+                               <li class="menu-item">
+                                   <a class="menu-link" href="/about/"><div>About</div></a>
+                               </li>
+                           </ul>
+                        </nav><!-- #primary-menu end -->
+				    </div>
+                </div>
+            </div>
+        </header>
+        <canvas id="spectrogram"></canvas>
+        <canvas id="legend"></canvas>
+        <div id="iosButton"></div>
+        <div id="record" class="music-box__modal">
+            <div class="music-box__modal__message">
+                <div class="music-box__modal__record-rings"></div>
+                <div class="music-box__modal__record-rings"></div>
+                <div class="music-box__modal__icon icon-mic"></div>
+            </div>
+        </div>
+        <div id="drawAnywhere" class="music-box__modal">
+            <div class="music-box__modal__message"></div>
+            <div class="music-box__hand-animation-sprite"></div>
+        </div>
+        <div id="loadingSound" class="music-box__modal">
+            <div class="music-box__modal__message">
+                <div id="loadingMessage" class="music-box__modal__message__text">Flute
+
+                    <svg class="spinner" width="55px" height="55px" viewBox="0 0 66 66"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <circle class="circle" fill="none" stroke-width="3" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
+                    </svg>
+                </div>
+            </div>
+        </div>
+        <div class="music-box__dropdown">
+            <select data-target=".music-box__buttons" class="music-box__dropdown__select">
+                <option value="taylor" data-show=".option-taylor">Bok Tower (Taylor)</option>
+                <option value="pf" data-show=".option-pf">Bryn Mawr Presbyterian (Petit & Fritsen)</option>
+                <option value="gj" data-show=".option-gj">UChicago (Gillet & Johnston)</option>
+                <option value="other" data-show=".option-other">Other musical instruments</option>
+                <option value="record" data-show=".option-record">Draw & record</option>
+            </select>
+        </div>
+        <div class="music-box__buttons">
+            <div data-mic data-name="mic" class="music-box__buttons__button option-record hide-button">
+                <div class="icon icon-mic"></div>
+            </div>
+            <div data-draw data-name="draw" class="music-box__buttons__button option-record hide-button">
+                <div class="icon icon-draw"></div>
+            </div>
+            <!-- .music-box__buttons__button(data-draw data-name="draw").option-record.hide-button// .icon.icon-draw-->
+            <div data-name="Flute" data-src="bin/snd/160210_flute_new_cmajor_scale.mp3" class="music-box__buttons__button option-other hide-button">
+                <div class="icon icon-flute"></div>
+            </div>
+            <div data-name="Whistling" data-src="bin/snd/160113_whistling.mp3" class="music-box__buttons__button option-other hide-button">
+                <div class="icon icon-guy"></div>
+            </div>
+            <div data-name="Trombone" data-src="bin/snd/160113_trombone.mp3" class="music-box__buttons__button option-other hide-button">
+                <div class="icon icon-trombone"></div>
+            </div>
+            <div data-name="Taylor, G2" data-src="bin/snd/Bok_1.mp3" class="music-box__buttons__button option-taylor hide-button">
+                <div class="icon icon-bell1"></div>
+            </div>
+            <div data-name="Taylor, G3" data-src="bin/snd/Bok_2.mp3" class="music-box__buttons__button option-taylor hide-button">
+                <div class="icon icon-bell2"></div>
+            </div>
+            <div data-name="Taylor, G4" data-src="bin/snd/Bok_3.mp3" class="music-box__buttons__button option-taylor hide-button">
+                <div class="icon icon-bell3"></div>
+            </div>
+            <div data-name="Taylor, G5" data-src="bin/snd/Bok_4.mp3" class="music-box__buttons__button option-taylor hide-button">
+                <div class="icon icon-bell4"></div>
+            </div>
+            <div data-name="Taylor, G6" data-src="bin/snd/Bok_5.mp3" class="music-box__buttons__button option-taylor hide-button">
+                <div class="icon icon-bell5"></div>
+            </div>
+            <div data-name="Petit &amp; Fritsen, G3" data-src="bin/snd/Bryn_1.mp3" class="music-box__buttons__button option-pf hide-button">
+                <div class="icon icon-bell2"></div>
+            </div>
+            <div data-name="Petit &amp; Fritsen, G4" data-src="bin/snd/Bryn_2.mp3" class="music-box__buttons__button option-pf hide-button">
+                <div class="icon icon-bell3"></div>
+            </div>
+            <div data-name="Petit &amp; Fritsen, G5" data-src="bin/snd/Bryn_3.mp3" class="music-box__buttons__button option-pf hide-button">
+                <div class="icon icon-bell4"></div>
+            </div>
+            <div data-name="Petit &amp; Fritsen, G6" data-src="bin/snd/Bryn_4.mp3" class="music-box__buttons__button option-pf hide-button">
+                <div class="icon icon-bell5"></div>
+            </div>
+            <div data-name="Gillet &amp; Johnston, low register" data-src="bin/snd/uchicago-low.mp3" class="music-box__buttons__button option-gj hide-button">
+                <div class="icon icon-bell2"></div>
+            </div>
+            <div data-name="Gillet &amp; Johnston, middle register" data-src="bin/snd/uchicago-middle.mp3" class="music-box__buttons__button option-gj hide-button">
+                <div class="icon icon-bell3"></div>
+            </div>
+            <div data-name="Gillet &amp; Johnston, middle-high register" data-src="bin/snd/uchicago-middle-high.mp3" class="music-box__buttons__button option-gj hide-button">
+                <div class="icon icon-bell4"></div>
+            </div>
+            <div data-name="Gillet &amp; Johnston, high register" data-src="bin/snd/uchicago-high.mp3" class="music-box__buttons__button option-gj hide-button">
+                <div class="icon icon-bell5"></div>
+            </div>
+        </div>
+        <div id="fileDrop">
+            <div class="file-overlay">
+                <div class="file-overlay-description"></div>
+            </div>
+        </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        <script type="text/javascript" src="/js/plugins.js"></script>
+        <script type="text/javascript" src="js/bundle.js"></script>
+        <script type="text/javascript" src="js/app.js"></script>
+        <script type="text/javascript" src="/js/functions.js"></script>
+    </body>
+</html>
